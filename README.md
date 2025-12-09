@@ -8,8 +8,7 @@ This project is designed to facilitate data analysis using Snakemake on the Grea
   - `config.yaml`: Defines workflow paths (data, results, logs) plus workflow parameters such as the preprocessing delimiter and final target.
 
 - **envs/**: Contains conda environment specifications.
-  - `analysis.yaml`: Specifies the conda environment for the analysis, including the required packages and their versions.
-  - `base.yaml`: Defines the base conda environment, which may include common dependencies needed across different workflows.
+  - `smk-ex.yaml`: Defines the base conda environment for the example, requirements and dependencies not actually used.
 
 - **logs/**: Directory for storing log files generated during the execution of the Snakemake workflow.
 
@@ -29,8 +28,7 @@ This project is designed to facilitate data analysis using Snakemake on the Grea
 1. **Environment Setup**: Create the conda environments specified in the `envs` directory using the provided YAML files.
 
     ```bash
-    conda env create -f envs/base.yaml
-    conda env create -f envs/analysis.yaml
+    conda env create -f envs/smk-ex.yaml
     ```
 
 1. **Configuration**:
@@ -46,7 +44,6 @@ This project is designed to facilitate data analysis using Snakemake on the Grea
 
 ## Usage Guidelines
 
-- Ensure that you have access to the Great Lakes cluster and the necessary permissions to submit jobs using SLURM.
 - Monitor the logs in the `logs/` directory for any issues or progress updates during the workflow execution.
 - Modify the rules in the `rules` directory as needed to accommodate your specific analysis requirements.
 
