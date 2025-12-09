@@ -13,4 +13,5 @@ dependencies:
   - scikit-learn
   - snakemake
   - snakemake-executor-plugin-slurm
-  - pip
+  - pip:
+    - snakemake-storage-plugin-fs
