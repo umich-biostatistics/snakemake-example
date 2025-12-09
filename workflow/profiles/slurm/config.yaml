@@ -1,12 +1,24 @@
+# SLURM cluster profile for Snakemake
+# Configures job submission parameters for cluster execution
+
 executor: slurm
-jobs: 10
-latency-wait: 5
+jobs: 4                          # Max concurrent jobs to submit to cluster
+latency-wait: 5                  # Wait time for file system (seconds)
 configfile: config/config.yaml
 
 default-resources:
-  slurm_partition: "standard"
-  slurm_account: "your_slurm_account"
-  runtime: 120  # minutes
-  mem_mb: 1024
-  cpus_per_task: 1
+  slurm_partition: "standard"    # CHANGE: Set to your actual partition name
+  slurm_account: "your_account"  # CHANGE: Set to your actual SLURM account
+  runtime: 30                    # Default runtime in minutes
+  mem_mb: 1024                   # Default memory in MB
+  cpus_per_task: 1               # Default CPU cores per task
   slurm-logdir: "./logs/slurm_logs"
+
+# Optional: Job-specific SLURM directives
+# Set on individual rules with resources: directive
+# Example in rule:
+#   resources:
+#     mem_mb=2048,
+#     runtime=60,
+#     cpus_per_task=4,
+#     slurm_partition="gpu"

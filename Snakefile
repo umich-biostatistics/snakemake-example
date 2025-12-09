@@ -1,3 +1,14 @@
+"""
+Snakemake workflow for data processing and analysis.
+Compatible with both local execution and SLURM cluster submission.
+
+Usage (local):
+    snakemake --cores 4
+
+Usage (SLURM cluster):
+    snakemake --profile workflow/profiles/slurm
+"""
+
 configfile: "config/config.yaml"
 
 rule all:
