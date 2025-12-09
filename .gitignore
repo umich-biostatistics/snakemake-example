@@ -1,0 +1,88 @@
+# Snakemake and workflow outputs
+.snakemake/
+.smk/
+
+# Data and results
+results/*.txt
+results/*.png
+results/*.pdf
+data/*
+!data/raw_data.csv
+!data/.gitkeep
+
+
+# Logs
+logs/*
+!logs/.gitkeep
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+.project
+.pydevproject
+
+# Conda
+.conda/
+conda-bld/
+
+# Environment files
+.env
+.env.local
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+*.swp
+*.swo
+*~
+
+# SLURM job scripts (if generated)
+slurm_*.sh
+slurm_*.out
+
+# Lock files (unless you want to commit them)
+# .snakemake/locks/
+
+# Optional: Keep raw data but ignore processed data
+# Uncomment to ignore all data except raw_data.csv
+data/*
+!data/raw_data.csv

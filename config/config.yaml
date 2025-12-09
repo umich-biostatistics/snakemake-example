@@ -1,0 +1,13 @@
+paths:
+  data_dir: "data"
+  results_dir: "results"
+  logs_dir: "logs"
+
+workflow:
+  final_output: "results/visualization.png"
+  preprocess_delimiter: ","
+
+# Logging configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(levelname)s - %(message)s"

@@ -1,0 +1,16 @@
+name: smk-ex
+
+channels:
+  - conda-forge
+  - bioconda
+
+dependencies:
+  - python=3.11
+  - numpy
+  - pandas
+  - scipy
+  - matplotlib
+  - scikit-learn
+  - snakemake
+  - snakemake-executor-plugin-slurm
+  - pip
