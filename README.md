@@ -1,6 +1,13 @@
-# Great Lakes Snakemake Workflow
+# Snakemake Workflow Example
 
-This project is designed to facilitate data analysis using Snakemake on the Great Lakes cluster at the University of Michigan. Below is an overview of the project's structure and components.
+This project demonstrates a modular, reproducible data analysis workflow using Snakemake. It is designed to run efficiently on both local machines and high-performance computing clusters (e.g., Great Lakes at the University of Michigan) via SLURM job submission.
+
+**Key Features:**
+
+- Single workflow runs on local and cluster systems
+- Explicit resource declarations per rule
+- Informative progress messages and logging
+- Flexible profile system for different execution environments
 
 ## Project Structure
 
@@ -17,11 +24,11 @@ This project is designed to facilitate data analysis using Snakemake on the Grea
   - `analysis.smk`: Rules specific to the analysis steps of the workflow.
   - `preprocess.smk`: Rules for preprocessing the data before analysis.
 
-- **Snakefile**: The main file that orchestrates the Snakemake workflow, importing rules from the `rules` directory and defining the overall workflow structure.
+- **Snakefile**: The main file that orchestrates the Snakemake workflow, importing rules from the `rules` directory and defining the overall workflow structure. Includes documentation and usage examples.
 
 - **workflow/**: Contains profiles and configurations for the workflow.
-  - **profiles/slurm/**: SLURM profile that enables the `snakemake-executor-plugin-slurm` plugin.
-    - `config.yaml`: Defines the executor (`slurm`), points to `config/config.yaml`, and sets default resources (partition, account, runtime, memory, CPUs).
+  - **profiles/slurm/**: SLURM profile that enables cluster job submission.
+    - `config.yaml`: Defines the executor (`slurm`), sets default resources (partition, account, runtime, memory, CPUs), and parallel job limits.
 
 ## Setup Instructions
 
@@ -36,17 +43,54 @@ This project is designed to facilitate data analysis using Snakemake on the Grea
     - Workflow paths and rule parameters: edit `config/config.yaml`.
     - Cluster resources (partition, account, memory, CPUs, runtime): edit `workflow/profiles/slurm/config.yaml` under `default-resources`.
 
-1. **Running the Workflow**: Execute Snakemake with the Great Lakes profile (adjust `--jobs` as needed):
+1. **Running the Workflow**:
 
-    ```bash
-    snakemake --profile workflow/profiles/slurm --jobs 150
-    ```
+   **Local execution (recommended for testing):**
+   ```bash
+   snakemake --cores 4
+   ```
+
+   **SLURM cluster execution (after configuring account and partition):**
+   ```bash
+   snakemake --profile workflow/profiles/slurm
+   ```
+   
+   **Dry run (preview without executing):**
+   ```bash
+   snakemake --cores 4 --dry-run
+   ```
+
+## Resource Requirements
+
+The workflow defines realistic resource requirements per rule:
+
+| Rule | Memory | Runtime | Cores |
+|------|--------|---------|-------|
+| preprocess_data | 512 MB | 5 min | 1 |
+| clean_data | 512 MB | 5 min | 1 |
+| run_analysis | 1024 MB | 15 min | 2 |
+| summarize_results | 512 MB | 5 min | 1 |
+| visualize_results | 512 MB | 10 min | 1 |
+| **Total** | - | **40 min** | - |
 
 ## Usage Guidelines
 
-- Monitor the logs in the `logs/` directory for any issues or progress updates during the workflow execution.
-- Modify the rules in the `rules` directory as needed to accommodate your specific analysis requirements.
+- **Logs**: Monitor progress and errors in the `logs/` directory. Each rule generates its own log file.
+- **Modifications**: Edit rules in the `rules/` directory to customize the analysis pipeline.
+- **Parameters**: Update workflow parameters in `config/config.yaml` (delimiter, paths, etc.).
+- **SLURM Users**: Before first cluster execution, configure `workflow/profiles/slurm/config.yaml`:
+  - Set `slurm_account` to your SLURM account (check with `sacctmgr list accounts`)
+  - Set `slurm_partition` to your default partition (check with `sinfo`)
+- **Progress Tracking**: Each rule includes a `message:` directive that prints when executed, helping you track workflow progress.
 
-## Workflow Components
+## Troubleshooting
 
-Each component of the workflow is designed to be modular, allowing for easy updates and modifications. The use of Snakemake ensures reproducibility and efficient resource management during the analysis process.
+**Workflow doesn't run:**
+- Check that data files exist in `data/`
+- Verify Python scripts in `scripts/` are executable
+- Run `snakemake --cores 4 --dry-run` to identify issues
+
+**SLURM job fails:**
+- Check job logs in `logs/slurm_logs/` for error details
+- Verify account and partition names match your SLURM configuration
+- Increase resource limits in `workflow/profiles/slurm/config.yaml` if jobs timeout

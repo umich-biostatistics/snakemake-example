@@ -123,33 +123,3 @@ If you need more detail:
 2025-12-09 13:26:46,470 - INFO - Analysis results: 5 hospitalized, 2 deaths
 2025-12-09 13:26:46,470 - INFO - Analysis output written to results/analysis_output.txt
 ```
-
-## On Great Lakes: Production Setup
-
-For production runs on Great Lakes, update `workflow/profiles/slurm/config.yaml`:
-
-```yaml
-executor: slurm
-jobs: 200
-latency-wait: 60
-configfile: config/config.yaml
-
-# Optional: separate SLURM job logs from Snakemake rule logs
-slurm-logdir: "logs/slurm"
-keep-logs: true
-
-default-resources:
-  slurm_partition: "standard"
-  slurm_account: "your_account"
-  runtime: 120
-  mem_mb: 16384
-  cpus_per_task: 4
-```
-
-Then run:
-
-```bash
-snakemake --profile workflow/profiles/slurm --jobs 150 --verbose
-```
-
-All logs will accumulate in `logs/` and `logs/slurm/` for audit and debugging.
