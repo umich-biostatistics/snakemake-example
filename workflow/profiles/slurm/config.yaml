@@ -4,7 +4,7 @@
 executor: slurm
 jobs: 4                          # Max concurrent jobs to submit to cluster
 latency-wait: 5                  # Wait time for file system (seconds)
-configfile: config/config.yaml
+configfile: workflow/config/config.yaml
 
 default-resources:
   slurm_partition: "your_partition"    # Set to your SLURM partition
@@ -13,21 +13,7 @@ default-resources:
   mem_mb: 1024                         # Default memory in MB
   cpus_per_task: 1                     # Default CPU cores per task
 
-# Configure storage so jobs execute from a node-local or scratch filesystem,
-# while workflow sources and configs live on a shared filesystem (e.g. /home).
-default-storage-provider: fs
-shared-fs-usage:
-  - persistence
-  - software-deployment
-  - sources
-  - source-cache
-
-# Generic example paths – adjust to your cluster layout.
-remote-job-local-storage-prefix: "/scratch/account_root/account0/username/snakemake_jobs/"
-local-storage-prefix: "/scratch/account_root/account0/username/snakemake_workflow/"
-
-# Centralize SLURM logs in the user's home directory.
-slurm-logdir: "$HOME/.snakemake/slurm_logs"
+slurm-logdir: "logs/slurm_logs"
 
 # Optional: Job-specific SLURM directives
 # Set on individual rules with resources: directive
