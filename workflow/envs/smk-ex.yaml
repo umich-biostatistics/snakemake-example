@@ -11,7 +11,3 @@ dependencies:
   - scipy
   - matplotlib
   - scikit-learn
-  - snakemake
-  - snakemake-executor-plugin-slurm
-  - pip:
-    - snakemake-storage-plugin-fs
