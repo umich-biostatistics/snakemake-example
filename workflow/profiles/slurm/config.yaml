@@ -1,11 +1,12 @@
 executor: slurm
-jobs: 200
-latency-wait: 60
+jobs: 10
+latency-wait: 5
 configfile: config/config.yaml
 
 default-resources:
   slurm_partition: "standard"
   slurm_account: "your_slurm_account"
   runtime: 120  # minutes
-  mem_mb: 16384
-  cpus_per_task: 4
+  mem_mb: 1024
+  cpus_per_task: 1
+  slurm-logdir: "./logs/slurm_logs"
