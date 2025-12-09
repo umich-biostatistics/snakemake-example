@@ -8,7 +8,7 @@ rule run_analysis:
     output:
         "results/analysis_output.txt"
     conda:
-        "envs/smk-ex.yaml"
+        "../envs/smk-ex.yaml"
     resources:
         mem_mb=1024,
         runtime=15,
@@ -19,7 +19,7 @@ rule run_analysis:
     message:
         "Running statistical analysis on cleaned data (using {threads} threads)"
     shell:
-        "python -m scripts.helpers run-analysis --input {input} --output {output} > {log} 2>&1" 
+        "python workflow/scripts/helpers.py run-analysis --input {input} --output {output} > {log} 2>&1" 
 
 
 rule summarize_results:
@@ -28,7 +28,7 @@ rule summarize_results:
     output:
         "results/summary.txt"
     conda:
-        "envs/smk-ex.yaml"
+        "../envs/smk-ex.yaml"
     resources:
         mem_mb=512,
         runtime=5,
@@ -39,7 +39,7 @@ rule summarize_results:
     message:
         "Summarizing analysis results"
     shell:
-        "python -m scripts.helpers summarize --input {input} --output {output} > {log} 2>&1" 
+        "python workflow/scripts/helpers.py summarize --input {input} --output {output} > {log} 2>&1" 
 
 
 rule visualize_results:
@@ -48,7 +48,7 @@ rule visualize_results:
     output:
         "results/visualization.png"
     conda:
-        "envs/smk-ex.yaml"
+        "../envs/smk-ex.yaml"
     resources:
         mem_mb=512,
         runtime=10,
@@ -59,4 +59,4 @@ rule visualize_results:
     message:
         "Generating visualization from summary"
     shell:
-        "python -m scripts.helpers visualize --input {input} --output {output} > {log} 2>&1" 
+        "python workflow/scripts/helpers.py visualize --input {input} --output {output} > {log} 2>&1" 

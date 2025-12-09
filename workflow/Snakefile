@@ -9,7 +9,7 @@ Usage (SLURM cluster):
     snakemake --profile workflow/profiles/slurm
 """
 
-configfile: "config/config.yaml"
+configfile: "workflow/config/config.yaml"
 
 rule all:
     input:

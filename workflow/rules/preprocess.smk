@@ -8,7 +8,7 @@ rule preprocess_data:
     output:
         "data/processed_data.csv"
     conda:
-        "envs/smk-ex.yaml"
+        "../envs/smk-ex.yaml"
     params:
         delimiter=config["workflow"]["preprocess_delimiter"]
     resources:
@@ -21,7 +21,7 @@ rule preprocess_data:
     message:
         "Preprocessing raw data from {input}"
     shell:
-        "python -m scripts.helpers preprocess --input {input} --output {output} --delimiter {params.delimiter} > {log} 2>&1"
+        "python workflow/scripts/helpers.py preprocess --input {input} --output {output} --delimiter {params.delimiter} > {log} 2>&1"
 
 
 rule clean_data:
@@ -30,7 +30,7 @@ rule clean_data:
     output:
         "data/cleaned_data.csv"
     conda:
-        "envs/smk-ex.yaml"
+        "../envs/smk-ex.yaml"
     resources:
         mem_mb=512,
         runtime=5,
@@ -41,4 +41,4 @@ rule clean_data:
     message:
         "Cleaning processed data: removing duplicates"
     shell:
-        "python -m scripts.helpers clean --input {input} --output {output} > {log} 2>&1"
+        "python workflow/scripts/helpers.py clean --input {input} --output {output} > {log} 2>&1"
