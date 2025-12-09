@@ -7,6 +7,8 @@ rule preprocess_data:
         "data/raw_data.csv"
     output:
         "data/processed_data.csv"
+    conda:
+        "envs/smk-ex.yaml"
     params:
         delimiter=config["workflow"]["preprocess_delimiter"]
     resources:
@@ -27,6 +29,8 @@ rule clean_data:
         "data/processed_data.csv"
     output:
         "data/cleaned_data.csv"
+    conda:
+        "envs/smk-ex.yaml"
     resources:
         mem_mb=512,
         runtime=5,

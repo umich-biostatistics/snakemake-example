@@ -7,6 +7,8 @@ rule run_analysis:
         "data/cleaned_data.csv"
     output:
         "results/analysis_output.txt"
+    conda:
+        "envs/smk-ex.yaml"
     resources:
         mem_mb=1024,
         runtime=15,
@@ -25,6 +27,8 @@ rule summarize_results:
         "results/analysis_output.txt"
     output:
         "results/summary.txt"
+    conda:
+        "envs/smk-ex.yaml"
     resources:
         mem_mb=512,
         runtime=5,
@@ -43,6 +47,8 @@ rule visualize_results:
         "results/summary.txt"
     output:
         "results/visualization.png"
+    conda:
+        "envs/smk-ex.yaml"
     resources:
         mem_mb=512,
         runtime=10,
