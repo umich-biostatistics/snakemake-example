@@ -58,7 +58,11 @@ This project demonstrates a modular, reproducible data analysis workflow using S
 
 ## Setup Instructions
 
-You should alread have a "base" snakemake env per the [snakemake instructions](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html).
+> [!TIP]
+> **On U-M clusters**, load a conda/mamba module first with `module load python3.11-anaconda/2024.02` or similar
+
+> [!NOTE]
+> You should first create a "base" snakemake env per the [snakemake instructions](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html).
 
 1. **Environment Setup**: Create the conda environments specified in the `envs` directory using the provided YAML files.
 
