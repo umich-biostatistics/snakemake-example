@@ -64,6 +64,10 @@ This project demonstrates a modular, reproducible data analysis workflow using S
 > [!NOTE]
 > You should first create a "base" snakemake env per the [snakemake instructions](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html).
 
+> [!WARNING]
+> The newest version of snakemake (9.14) at the time of writing (2025-12-10) does not work with the slurm executor plugin.
+> See issue [#3853](https://github.com/snakemake/snakemake/issues/3853). Downgrade to or install snakemake=9.13 
+
 1. **Environment Setup**: Create the conda environments specified in the `envs` directory using the provided YAML files.
 
     ```bash
