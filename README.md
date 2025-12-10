@@ -76,7 +76,7 @@ You should alread have a "base" snakemake env per the [snakemake instructions](h
    **Local execution (recommended for testing):**
 
    ```bash
-   snakemake --cores 4
+   snakemake --cores 4 --sdm conda
    ```
 
    **SLURM cluster execution:**
@@ -90,7 +90,7 @@ You should alread have a "base" snakemake env per the [snakemake instructions](h
    **Dry run (preview without executing):**
 
    ```bash
-   snakemake --cores 4 --dry-run
+   snakemake --cores 4 --dry-run --sdm conda
    ```
 
 ## Usage Guidelines
