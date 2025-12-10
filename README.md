@@ -83,8 +83,8 @@ You should alread have a "base" snakemake env per the [snakemake instructions](h
 
    ```bash
    snakemake --profile workflow/profiles/slurm \
-   --default-resources slurm_account="support" slurm_partition="build" \
-   --sdm conda
+       --default-resources slurm_account="support" slurm_partition="build" \
+       --sdm conda
    ```
 
    **Dry run (preview without executing):**
