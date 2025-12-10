@@ -63,6 +63,8 @@ This project demonstrates a modular, reproducible data analysis workflow using S
 
 > [!NOTE]
 > You should first create a "base" snakemake env per the [snakemake instructions](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html).
+>
+> Make sure to activate the base before running and snakemake commands with `source activate snakmakeEnvName`.
 
 > [!WARNING]
 > The newest version of snakemake (9.14) at the time of writing (2025-12-10) does not work with the slurm executor plugin.
@@ -90,7 +92,7 @@ This project demonstrates a modular, reproducible data analysis workflow using S
    **SLURM cluster execution:**
 
    ```bash
-   snakemake --profile workflow/profiles/slurm \
+   snakemake --workflow-profile workflow/profiles/slurm \
        --default-resources slurm_account="support" slurm_partition="build" \
        --sdm conda
    ```
