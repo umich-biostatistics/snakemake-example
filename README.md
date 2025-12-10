@@ -93,7 +93,7 @@ This project demonstrates a modular, reproducible data analysis workflow using S
 
    ```bash
    snakemake --workflow-profile workflow/profiles/slurm \
-       --default-resources slurm_account="support" slurm_partition="build" \
+       --default-resources slurm_account="yourAccount0" slurm_partition="standard" \
        --sdm conda
    ```
 
@@ -102,6 +102,8 @@ This project demonstrates a modular, reproducible data analysis workflow using S
    ```bash
    snakemake --cores 4 --dry-run --sdm conda
    ```
+> [!NOTE]
+> You don't need to pass the `--default-resources` flag if you've edited the rules or `workflow/profiles/slurm/config.yaml` to define these.
 
 ## Usage Guidelines
 
