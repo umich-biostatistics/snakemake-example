@@ -6,7 +6,7 @@ Usage (local):
     snakemake --cores 4
 
 Usage (SLURM cluster):
-    snakemake --profile workflow/profiles/slurm
+    snakemake --profile workflow/profiles/slurm --sdm conda
 """
 
 configfile: "workflow/config/config.yaml"
