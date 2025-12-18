@@ -4,6 +4,20 @@ This project demonstrates a simple, modular, reproducible data analysis workflow
 
 This example is quite rudimentary, and was designed to show how to set up a basic Snakemake workflow with SLURM integration. For more complete examples, check out the [Snakemake Workflow Catalog](https://snakemake.github.io/snakemake-workflow-catalog/).
 
+## Table of Contents
+
+- [Project Structure](#project-structure)
+- [Prerequisites](#prerequisites)
+- [Setup Instructions](#setup-instructions)
+  - [Environment Setup](#environment-setup)
+  - [Configuration](#configuration)
+  - [Running the Workflow](#running-the-workflow)
+- [Running on clusters](#running-on-clusters)
+  - [Option 1: SBATCH](#option-1-sbatch)
+  - [Option 2: Persistent Session (Multiplexer)](#option-2-persistent-session-multiplexer)
+- [Usage Guidelines](#usage-guidelines)
+- [Troubleshooting](#troubleshooting)
+
 ## Project Structure
 
 ```text
@@ -71,45 +85,45 @@ source activate snakemake
 
 ## Setup Instructions
 
-1. **Environment Setup**:
+### Environment Setup
 
-   - Create the conda environment for the workflow, specified in the `workflow/envs/` directory:
-
-    ```bash
-    snakemake --sdm conda --conda-create-envs-only
-    ```
-
-   - The workflow will use this environment when executing rules.
-
-2. **Configuration**:
-
-   - Workflow paths and rule parameters: edit `config/config.yaml`.
-   - Cluster resources (partition, account, memory, CPUs, runtime): edit `workflow/profiles/slurm/config.yaml` under `default-resources`.
-
-3. **Running the Workflow**:
-
-   **Local execution (recommended for testing):**
+1. Create the conda environment for the workflow, specified in the `workflow/envs/` directory:
 
    ```bash
-   snakemake --cores 4 --sdm conda
+   snakemake --sdm conda --conda-create-envs-only
    ```
 
-   **SLURM cluster execution:**
+2. The workflow will use this environment when executing rules.
 
-   ```bash
-   snakemake --workflow-profile workflow/profiles/slurm \
-       --default-resources slurm_account="yourAccount0" slurm_partition="standard" \
-       --sdm conda
-   ```
+### Configuration
 
-   **Dry run (preview without executing):**
+1. Workflow paths and rule parameters: edit `config/config.yaml`.
+2. Cluster resources (partition, account, memory, CPUs, runtime): edit `workflow/profiles/slurm/config.yaml` under `default-resources`.
 
-   ```bash
-   snakemake --cores 4 --dry-run --sdm conda
-   ```
+### Running the Workflow
+
+**Local execution (recommended for testing):**
+
+```bash
+snakemake --cores 4 --sdm conda
+```
+
+**SLURM cluster execution:**
+
+```bash
+snakemake --workflow-profile workflow/profiles/slurm \
+   --default-resources slurm_account="yourAccount0" slurm_partition="standard" \
+   --sdm conda
+```
 
 > [!NOTE]
 > You don't need to pass the `--default-resources` flag if you've edited the rules or `workflow/profiles/slurm/config.yaml` to define these.
+
+**Dry run (preview without executing):**
+
+```bash
+snakemake --cores 4 --dry-run --sdm conda
+```
 
 ## Running on clusters
 
@@ -119,8 +133,9 @@ This workflow can be run on HPC clusters in two common ways. Choose the batch-su
 
 **Batch submit with `smk-slurm.sh` (recommended for long runs)**: Schedule the Snakemake controller as a regular SLURM job so it runs on a compute node with allocated resources.
 
-- Edit the SBATCH header in `smk-slurm.sh` to set your `--account`, `--partition`, `--time`, `--cpus-per-task`, and `--mem`.
-- Remove `--forceall` from the Snakemake command in the script for normal incremental runs (leave it only for forced full re-runs). Submit with:
+1. Edit the SBATCH header in `smk-slurm.sh` to set your `--account`, `--partition`, `--time`, `--cpus-per-task`, and `--mem`.
+2. Remove `--forceall` from the Snakemake command in the script for normal incremental runs (leave it only for forced full re-runs). 
+3. Submit with:
 
 ```bash
 sbatch smk-slurm.sh
