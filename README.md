@@ -2,6 +2,8 @@
 
 This project demonstrates a simple, modular, reproducible data analysis workflow using Snakemake. It is designed to run on both local machines and high-performance computing clusters (e.g., Great Lakes at the University of Michigan) via the SLURM job submission executor plugin.
 
+![Directed Acyclic Graph (DAG) visualization illustrating a simple, serial workflow for the Snakemake example. The graph shows the sequence of tasks and their dependencies, highlighting how each task leads to the next in a linear progression. The overall tone of the visualization is informative, aimed at helping users understand the workflow structure and execution order.](workflow/resources/dag.png)
+
 This example is quite rudimentary, and was designed to show how to set up a basic Snakemake workflow with SLURM integration. For more complete examples, check out the [Snakemake Workflow Catalog](https://snakemake.github.io/snakemake-workflow-catalog/).
 
 ## Table of Contents
@@ -167,6 +169,10 @@ module load mamba
 
 - Detach the session so the controller survives network disconnects and re-attach later with `tmux attach -t snakemake` (or the equivalent `screen` commands).
 - Only use this approach when your cluster's policies permit running the controller on the login node — otherwise prefer the batch script above.
+
+When running the example, you should have output files generated in the `results/` directory based on the rules defined in the workflow:
+
+![Disease Surveillance Summary dashboard displaying outcomes by case status and key epidemiological rates. Left chart shows case outcomes: 13 recovered (green bar), 5 hospitalized (orange bar), 2 deaths (red bar). Right chart shows hospitalization rate at 25.0% and case fatality rate at 10.0%. Summary statistics indicate total cases: 20, hospitalized: 5, deaths: 2, with CFR of 10.0%.](workflow/resources/visualization.png)
 
 ## Usage Guidelines
 
