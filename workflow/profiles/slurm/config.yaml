@@ -4,7 +4,7 @@
 executor: slurm
 jobs: 4                          # Max concurrent jobs to submit to cluster
 latency-wait: 5                  # Wait time for file system (seconds)
-configfile: workflow/config/config.yaml
+configfile: config/config.yaml
 
 default-resources:
   slurm_partition: "your_partition"    # Set to your SLURM partition
