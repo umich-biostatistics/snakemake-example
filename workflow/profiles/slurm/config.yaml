@@ -8,7 +8,7 @@ configfile: config/config.yaml
 
 default-resources:
   slurm_partition: "your_partition"    # Set to your SLURM partition
-  slurm_account: "your_account"        # Set to your SLURM account
+  slurm_account: "yourAccount0"        # Set to your SLURM account
   runtime: 10                          # Default runtime in minutes
   mem_mb: 1024                         # Default memory in MB
   cpus_per_task: 1                     # Default CPU cores per task
