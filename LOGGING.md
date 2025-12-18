@@ -85,7 +85,7 @@ cat logs/run_analysis.log
 
 # View SLURM job logs (if configured)
 # Set slurm-logdir in workflow/profiles/slurm/config.yaml
-cat logs/slurm/<jobid>.log
+cat logs/slurm/{RULE}/{JOBID}.log
 
 # Check job status in SLURM
 squeue -u $USER
@@ -101,6 +101,12 @@ logging:
   level: "INFO"
   format: "%(asctime)s - %(levelname)s - %(message)s"
 ```
+
+### SLURM Logging
+
+From the [SLURM executor documentation](https://snakemake.github.io/snakemake-plugin-catalog/plugins/executor/slurm.html#log-files-getting-information-on-failures) on SLURM log files:
+
+> By default, the SLURM executor deletes log files of successful jobs immediately after completion (remember: this is redundant information). To modify this behavior and retain logs of successful jobs, use the --slurm-keep-successful-logs flag. Additionally, log files for failed jobs are preserved for 10 days by default. To change this retention period, use the --slurm-delete-logfiles-older-than flag.
 
 ## 5. Troubleshooting
 
