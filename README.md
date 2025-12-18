@@ -65,7 +65,7 @@ For more in-depth examples, check out the [Snakemake Workflow Catalog](https://s
 > See issue [#3853](https://github.com/snakemake/snakemake/issues/3853). Downgrade to, or install, snakemake=9.13.
 
 - Conda or Mamba installed on your system.
-  - **On U-M clusters**, load a conda/mamba module first with `module load python3.11-anaconda/2024.02` or similar
+  - **On U-M clusters**, load a conda/mamba module first with `module load mamba` or similar
 - Create a "base" snakemake env per the [snakemake instructions](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html).
   - Make sure to activate the base before running and snakemake commands with `source activate snakmakeEnvName`.
 
@@ -110,6 +110,48 @@ For more in-depth examples, check out the [Snakemake Workflow Catalog](https://s
 
 > [!NOTE]
 > You don't need to pass the `--default-resources` flag if you've edited the rules or `workflow/profiles/slurm/config.yaml` to define these.
+
+## Running on clusters
+
+This workflow can be run on HPC clusters in two common ways. Choose the batch-submission approach for long-running or resource-heavy controller processes, or use a persistent session on the login node for short tests when the cluster policy allows it.
+
+### Option 1: SBATCH
+
+**Batch submit with `smk-slurm.sh` (recommended for long runs)**: Schedule the Snakemake controller as a regular SLURM job so it runs on a compute node with allocated resources.
+
+- Edit the SBATCH header in `smk-slurm.sh` to set your `--account`, `--partition`, `--time`, `--cpus-per-task`, and `--mem`.
+- Remove `--forceall` from the Snakemake command in the script for normal incremental runs (leave it only for forced full re-runs). Submit with:
+
+```bash
+sbatch smk-slurm.sh
+```
+
+The controller's stdout/stderr go to the file defined by `#SBATCH --output=` (default: `logs/controller.log`). Use this method when login nodes prohibit long-lived processes or when you want the controller to run on a compute node.
+
+The provided `smk-slurm.sh` runs Snakemake with recovery-oriented defaults to make restarts safer:
+
+- `--rerun-incomplete` — re-run jobs that left incomplete output after a crash.
+- `--restart-times 3` — retry failed jobs up to 3 times for transient errors.
+- `--latency-wait 60` — wait up to 60 seconds for files to appear on shared filesystems.
+
+Adjust or remove those flags directly in `smk-slurm.sh` if you prefer a different behavior.
+
+### Option 2: Persistent Session ([Multiplexer](https://effective-shell.com/part-6-advanced-techniques/master-the-multiplexer/))
+
+**Run on a login node inside `tmux`/`screen` (short running/tests)**: For short jobs, tests, or interactive debugging, start a persistent session and run Snakemake from the login node. Example:
+
+```bash
+tmux new -s snakemake
+# inside the session:
+module load mamba
+ snakemake --workflow-profile workflow/profiles/slurm \
+   --default-resources slurm_account="yourAccount0" slurm_partition="standard" \
+   --sdm conda
+# detach: Ctrl-b d (tmux) or Ctrl-a d (screen)
+```
+
+- Detach the session so the controller survives network disconnects and re-attach later with `tmux attach -t snakemake` (or the equivalent `screen` commands).
+- Only use this approach when your cluster's policies permit running the controller on the login node — otherwise prefer the batch script above.
 
 ## Usage Guidelines
 
